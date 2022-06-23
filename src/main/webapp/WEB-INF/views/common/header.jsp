@@ -1,4 +1,5 @@
-	<%@page import="com.kh.mvc.member.model.dto.Member"%>
+	<%@page import="com.kh.mvc.member.model.dto.MemberRole"%>
+<%@page import="com.kh.mvc.member.model.dto.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
@@ -105,6 +106,9 @@ window.onload = () => {
 					<li class="home"><a href="<%= request.getContextPath() %>">Home</a></li>
 					<li class="notice"><a href="#">공지사항</a></li>
 					<li class="board"><a href="#">게시판</a></li>
+					<% if(loginMember != null && loginMember.getMemberRole() == MemberRole.A) { %>
+					<li class="admin"><a href="<%= request.getContextPath()%>/admin/memberList">회원관리</a></li>
+					<% } %>
 				</ul>
 			</nav>
 			<!-- 메인메뉴 끝-->

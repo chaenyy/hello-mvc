@@ -3,9 +3,11 @@ package com.kh.mvc.member.model.service;
 import static com.kh.mvc.common.JdbcTemplate.*;
 
 import java.sql.Connection;
+import java.util.List;
 
 import com.kh.mvc.member.model.dao.MemberDao;
 import com.kh.mvc.member.model.dto.Member;
+import com.kh.mvc.member.model.exception.MemberException;
 
 public class MemberService {
 	private MemberDao memberDao = new MemberDao();
@@ -59,5 +61,27 @@ public class MemberService {
 			close(conn);
 		}
 		return result;
+	}
+
+	public int updatePassword(String newPassword, String memberId) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = memberDao.updatePassword(conn, newPassword, memberId);
+			commit(conn);
+		} catch(Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
+	public List<Member> findAll() {
+		Connection conn = getConnection();
+		List<Member> list = memberDao.findAll(conn);
+		close(conn);
+		return list;
 	}
 }

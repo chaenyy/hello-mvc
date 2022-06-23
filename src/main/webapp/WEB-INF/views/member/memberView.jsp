@@ -35,18 +35,6 @@
 				</td>
 			</tr>
 			<tr>
-				<th>패스워드<sup>*</sup></th>
-				<td>
-					<input type="password" name="password" id="password" value="<%= password %>" required>
-				</td>
-			</tr>
-			<tr>
-				<th>패스워드확인<sup>*</sup></th>
-				<td>	
-					<input type="password" id="passwordCheck" value="<%= password %>" required><br>
-				</td>
-			</tr>
-			<tr>
 				<th>이름<sup>*</sup></th>
 				<td>	
 				<input type="text"  name="memberName" id="memberName" value="<%= memberName %>"  required><br>
@@ -97,19 +85,32 @@
 			</tr>
 		</table>
         <input type="submit" value="정보수정"/>
+        <input type="button" value="비밀번호변경" onclick="updatePassword();"/>
         <input type="button" onclick="deleteMember();" value="탈퇴"/>
 	</form>
 </section>
 <form action="" name="memberDelFrm"></form>
 <script>
-document.querySelector("#passwordCheck").onblur = (e) => {
-	const password = document.querySelector("#password");
-	if(password.value !== e.target.value) {
-		alert("비밀번호가 일치하지 않습니다.");
-		password.focus();
+const updatePassword = () => {
+	location.href="<%= request.getContextPath()%>/member/passwordUpdate";
+};
+
+document.memberEnrollFrm.onsubmit = (e) => {
+	const memberName = document.querySelector("#memberName");
+	if(!/^[가-힣]{2,}$/.test(memberName.value)) {
+		alert("한글 2글자 이상 입력해주세요.");
+		memberName.select();
+		return false;
+	}
+	
+	const phone = document.querySelector("#phone");
+	if(!/^010[0-9]{8}$/.test(phone.value)) {
+		alert("유효한 전화번호를 입력해주세요.");
+		phone.select();
+		return false;
 	}
 };
-	
+
 /**
  * POST /member/memberDelete
  * memberDelFrm 제출
@@ -118,14 +119,15 @@ const deleteMember = () => {
 		
 };
 </script>
+
+
 <%!
 /**
 * compile시 메소드로 선언처리됨.
 * 선언위치는 어디든 상관없다.
 */ 
-public String hobbyChecked(List<String> hobbyList, String hobby){
+public String hobbyChecked(List<String> hobbyList, String hobby) {
 	return hobbyList != null && hobbyList.contains(hobby) ? "checked" : "";
 }
-
 %>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

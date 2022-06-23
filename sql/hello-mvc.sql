@@ -61,5 +61,6 @@ commit;
 select * from member;
 
 delete from member where member_id = 'sinsa';
+update member set password='1234' where member_id='honggd';
 commit;
 
