@@ -84,4 +84,20 @@ public class MemberService {
 		close(conn);
 		return list;
 	}
+	
+	// 탈퇴
+	public int deleteMember(String memberId) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = memberDao.deleteMember(conn, memberId);
+			commit(conn);
+		} catch(Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
 }

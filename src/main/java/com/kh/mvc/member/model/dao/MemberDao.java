@@ -182,4 +182,22 @@ public class MemberDao {
 		}
 		return list;
 	}
+	
+	// 탈퇴
+	public int deleteMember(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new MemberException("회원 탈퇴 오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }

@@ -89,13 +89,21 @@
         <input type="button" onclick="deleteMember();" value="탈퇴"/>
 	</form>
 </section>
-<form action="" name="memberDelFrm"></form>
+<form action="<%= request.getContextPath() %>/member/memberDelete" name="memberDelFrm" method="POST"></form>
+
 <script>
 const updatePassword = () => {
 	location.href="<%= request.getContextPath()%>/member/passwordUpdate";
 };
 
-document.memberEnrollFrm.onsubmit = (e) => {
+const deleteMember = () => {
+	const deleteYorN = confirm("정말로 탈퇴하시겠습니까?");
+	if(deleteYorN) {
+		document.memberDelFrm.submit();
+	}
+};
+
+document.memberUpdateFrm.onsubmit = (e) => {
 	const memberName = document.querySelector("#memberName");
 	if(!/^[가-힣]{2,}$/.test(memberName.value)) {
 		alert("한글 2글자 이상 입력해주세요.");
@@ -111,13 +119,7 @@ document.memberEnrollFrm.onsubmit = (e) => {
 	}
 };
 
-/**
- * POST /member/memberDelete
- * memberDelFrm 제출
- */
-const deleteMember = () => {
-		
-};
+
 </script>
 
 

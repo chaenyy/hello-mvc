@@ -30,7 +30,6 @@ public class HelloMvcUtils {
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		
 		return encryptedPassword;
 	}
 
